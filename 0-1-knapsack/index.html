@@ -1,0 +1,310 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/katex/katex.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/highlight/github.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/franklin.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/poole_hyde.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/custom.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <title>0/1 Knapsack</title> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr.min.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr_index.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunrclient.min.js"></script> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <br> <img src="/Dynamic-Programming-Patterns/assets/infra/DP.svg" style="width: 160px; height: auto; display: inline"> <h1> <div style="line-height:18px; font-size: 20px; opacity: 0.85"><a href="/Dynamic-Programming-Patterns/">Dynamic Programming Patterns</a></div> </h1> <div style="line-height:18px; font-size: 15px; opacity: 0.85">by <a href="https://github.com/rfhklwt">Inia Owlet</a></div> </div> <br> <style> </style> <nav class=sidebar-nav  style="opacity: 0.9"> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/"><b>Overview</b></a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/introduction"><b>Introduction</b></a> <br> <div class=course-section >Pattern 1: 0/1 Knapsack</div> <a class="sidebar-nav-item active" href="/Dynamic-Programming-Patterns/0-1-knapsack/"><b>1.0</b> - 0/1 Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition/"><b>1.1</b> - Equal Subset Sum Partition</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/subset-sum/"><b>1.2</b> - Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/minimum-subset-sum-difference/"><b>1.3</b> - Minimum Subset Sum Difference</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/"><b>1.4</b> - Count of Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/target-sum/"><b>1.5</b> - Target Sum</a> <div class=course-section >Pattern 2: Unbounded Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/"><b>2.0</b> - Unbouned Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/rod-cutting/"><b>2.1</b> - Rod Cutting</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/coin-change/"><b>2.2</b> - Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/minimum-coin-change/"><b>2.3</b> - Minimum Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/maximum-ribbon-cut/"><b>2.4</b> - Maximum Ribbon Cut</a> <div class=course-section >Pattern 3: Fast & Slow Pointers</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/"><b>3.0</b> - Fibonacci Numbers</a> <br> </nav> </div> </div> <div class="content container"> <div class=franklin-content ><h1 id=01_knapsack ><a href="#01_knapsack" class=header-anchor >0/1 Knapsack</a></h1> <span style="font-size:24px;font-weight:300;">We'll cover the following</span> <div class=blank ></div> <div class=franklin-toc ><ol><li><a href="#introduction">Introduction</a><li><a href="#problem_statement">Problem Statement</a><li><a href="#basic_solution">Basic Solution</a><ol><li><a href="#code">Code</a></ol><li><a href="#top-down_dynamic_programming_with_memoization">Top-down Dynamic Programming with Memoization</a><ol><li><a href="#code__2">Code</a></ol><li><a href="#bottom-up_dynamic_programming">Bottom-up Dynamic Programming</a><ol><li><a href="#code__3">Code</a></ol><li><a href="#how_to_find_the_selected_items">How to find the selected items?</a><li><a href="#challenge">Challenge</a><li><a href="#next">Next</a></ol></div> <div class=blank ></div> <h2 id=introduction ><a href="#introduction" class=header-anchor >Introduction</a></h2> <p>Given the weights and profits of <code>N</code> items, we are asked to put these items in a knapsack that has a capacity <code>C</code>. The goal is to get the maximum profit from the items in the knapsack. Each item can only be selected once, as we don’t have multiple quantities of any item.</p> <p>Let’s take Merry’s example, who wants to carry some fruits in the knapsack to get maximum profit. Here are the weights and profits of the fruits:</p> <p><strong>Items:</strong> &#123; Apple, Orange, Banana, Melon &#125;</p> <p><strong>Weights:</strong> &#123; 2, 3, 1, 4 &#125;</p> <p><strong>Profits:</strong> &#123; 4, 5, 3, 7 &#125;</p> <p><strong>Knapsack capacity:</strong> 5</p> <p>Let’s try to put different combinations of fruits in the knapsack, such that their total weight is not more than 5:</p> <p>Apple &#43; Orange &#40;total weight 5&#41; &#61;&gt; 9 profit</p> <p>Apple &#43; Banana &#40;total weight 3&#41; &#61;&gt; 7 profit</p> <p>Orange &#43; Banana &#40;total weight 4&#41; &#61;&gt; 8 profit</p> <p>Banana &#43; Melon &#40;total weight 5&#41; &#61;&gt; 10 profit</p> <p>This shows that <strong>Banana &#43; Melon</strong> is the best combination, as it gives us the maximum profit and the total weight does not exceed the capacity.</p> <h2 id=problem_statement ><a href="#problem_statement" class=header-anchor >Problem Statement</a></h2> <p>Given two integer arrays to represent weights and profits of <code>N</code> items, we need to find a subset of these items which will give us maximum profit such that their cumulative weight is not more than a given number <code>C</code>. Write a function that returns the maximum profit. Each item can only be selected once, which means either we put an item in the knapsack or skip it.</p> <h2 id=basic_solution ><a href="#basic_solution" class=header-anchor >Basic Solution</a></h2> <p>A basic brute-force solution could be to try all combinations of the given items &#40;as we did above&#41;, allowing us to choose the one with maximum profit and a weight that doesn’t exceed <code>C</code>. Take the example of four items &#40;A, B, C, and D&#41;, as shown in the diagram below. To try all the combinations, our algorithm will look like:</p> <pre><code class="Plaintext hljs">for each item &#x27;i&#x27; 
+    create a new set which INCLUDES item &#x27;i&#x27; if the total weight does not exceed the capacity, and 
+        recursively process the remaining capacity and items
+    create a new set WITHOUT item &#x27;i&#x27;, and recursively process the remaining items 
+return the set from the above two sets with higher profit</code></pre> <p>Here is a visual representation of our algorithm:</p> <p><img src="/Dynamic-Programming-Patterns/assets/img/0-1-knapsack/1.1.svg" alt="" /></p> <p>All green boxes have a total weight that is less than or equal to the capacity &#40;7&#41;, and all the red ones have a weight that is more than 7. The best solution we have is with items &#91;B, D&#93; having a total profit of 22 and a total weight of 7.</p> <h3 id=code ><a href="#code" class=header-anchor >Code</a></h3> <p>Here is the code for the brute-force solution:</p> <pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-keyword >return</span> knapsack_recursive(profits, weights, capacity, <span class=hljs-number >0</span>)
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">knapsack_recursive</span>(<span class=hljs-params >profits, weights, capacity, currentIndex</span>):
+    <span class=hljs-comment ># base checks</span>
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> currentIndex &gt;= <span class=hljs-built_in >len</span>(profits):
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># recursive call after choosing the element at the currentIndex</span>
+    <span class=hljs-comment ># if the weight of the element at currentIndex exceeds the capacity, we  shouldn&#x27;t process this</span>
+    profit1 = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >if</span> weights[currentIndex] &lt;= capacity:
+        profit1 = profits[currentIndex] + knapsack_recursive(
+            profits, weights, capacity - weights[currentIndex], currentIndex + <span class=hljs-number >1</span>)
+
+    <span class=hljs-comment ># recursive call after excluding the element at the currentIndex</span>
+    profit2 = knapsack_recursive(profits, weights, capacity, currentIndex + <span class=hljs-number >1</span>)
+
+    <span class=hljs-keyword >return</span> <span class=hljs-built_in >max</span>(profit1, profit2)
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>))
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>))
+
+
+main()</code></pre> <p>The above algorithm’s time complexity is exponential <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord ><span class=mord >2</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span>, where ‘n’ represents the total number of items. This can also be confirmed from the above recursion tree. As we can see that we will have a total of <code>31</code> recursive calls – calculated through <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy=false >(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy=false >)</mo><mo>+</mo><mo stretchy=false >(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy=false >)</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(2^n) + (2^n) - 1</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord ><span class=mord >2</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class=mopen >(</span><span class=mord ><span class=mord >2</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >−</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:0.64444em;vertical-align:0em;"></span><span class=mord >1</span></span></span></span> , which is asymptotically equivalent to <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord ><span class=mord >2</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span>.</p> <p>The space complexity is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>n</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault">n</span><span class=mclose >)</span></span></span></span>. This space will be used to store the recursion stack. Since our recursive algorithm works in a depth-first fashion, which means, we can’t have more than <code>n</code> recursive calls on the call stack at any time.</p> <p>Let’s visually draw the recursive calls to see if there are any overlapping sub-problems. As we can see, in each recursive call, profits and weights arrays remain constant, and only capacity and currentIndex change. For simplicity, let’s denote capacity with <code>c</code> and currentIndex with <code>i</code>:</p> <p><img src="/Dynamic-Programming-Patterns/assets/img/0-1-knapsack/1.2.png" alt="" /></p> <p>We can clearly see that <code>c:4, i&#61;3</code> has been called twice; hence we have an overlapping sub-problems pattern. As we discussed above, overlapping sub-problems can be solved through Memoization.</p> <h2 id=top-down_dynamic_programming_with_memoization ><a href="#top-down_dynamic_programming_with_memoization" class=header-anchor >Top-down Dynamic Programming with Memoization</a></h2> <p>We can use memoization to overcome the overlapping sub-problems. To reiterate, memoization is when we store the results of all the previously solved sub-problems and return the results from memory if we encounter a problem that has already been solved.</p> <p>Since we have two changing values &#40;<code>capacity</code> and <code>currentIndex</code>&#41; in our recursive function <code>knapsackRecursive&#40;&#41;</code>, we can use a two-dimensional array to store the results of all the solved sub-problems. As mentioned above, we need to store results for every sub-array &#40;i.e., for every possible index <code>i</code>&#41; and for every possible capacity <code>c</code>.</p> <h3 id=code__2 ><a href="#code__2" class=header-anchor >Code</a></h3> <p>Here is the code with memoization &#40;see the changes in the highlighted lines&#41;:</p> <pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-comment ># create a two dimensional array for Memoization, each element is initialized to &#x27;-1&#x27;</span>
+    dp = [[-<span class=hljs-number >1</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> y <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-built_in >len</span>(profits))]
+    <span class=hljs-keyword >return</span> knapsack_recursive(dp, profits, weights, capacity, <span class=hljs-number >0</span>)
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">knapsack_recursive</span>(<span class=hljs-params >dp, profits, weights, capacity, currentIndex</span>):
+
+    <span class=hljs-comment ># base checks</span>
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> currentIndex &gt;= <span class=hljs-built_in >len</span>(profits):
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># if we have already solved a similar problem, return the result from memory</span>
+    <span class=hljs-keyword >if</span> dp[currentIndex][capacity] != -<span class=hljs-number >1</span>:
+        <span class=hljs-keyword >return</span> dp[currentIndex][capacity]
+
+    <span class=hljs-comment ># recursive call after choosing the element at the currentIndex</span>
+    <span class=hljs-comment ># if the weight of the element at currentIndex exceeds the capacity, we</span>
+    <span class=hljs-comment ># shouldn&#x27;t process this</span>
+    profit1 = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >if</span> weights[currentIndex] &lt;= capacity:
+        profit1 = profits[currentIndex] + knapsack_recursive(
+            dp, profits, weights, capacity - weights[currentIndex], currentIndex + <span class=hljs-number >1</span>)
+
+    <span class=hljs-comment ># recursive call after excluding the element at the currentIndex</span>
+    profit2 = knapsack_recursive(
+        dp, profits, weights, capacity, currentIndex + <span class=hljs-number >1</span>)
+
+    dp[currentIndex][capacity] = <span class=hljs-built_in >max</span>(profit1, profit2)
+    <span class=hljs-keyword >return</span> dp[currentIndex][capacity]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>))
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>))
+
+
+main()</code></pre> <p><strong>What is the time and space complexity of the above solution?</strong> Since our memoization array <code>dp&#91;profits.length&#93;&#91;capacity&#43;1&#93;</code> stores the results for all the subproblems, we can conclude that we will not have more than <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>∗</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">N * C</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> subproblems &#40;where ‘N’ is the number of items and <code>C</code> is the knapsack capacity&#41;. This means that our time complexity will be <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N * C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span>.</p> <p>The above algorithm will be using <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N * C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span> space for the memoization array. Other than that, we will use <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mclose >)</span></span></span></span> space for the recursion call-stack. So the total space complexity will be <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>C</mi><mo>+</mo><mi>N</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N * C + N)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >+</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mclose >)</span></span></span></span>, which is asymptotically equivalent to <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N * C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span>.</p> <h2 id=bottom-up_dynamic_programming ><a href="#bottom-up_dynamic_programming" class=header-anchor >Bottom-up Dynamic Programming</a></h2> <p>Let’s try to populate our <code>dp&#91;&#93;&#91;&#93;</code> array from the above solution, working in a bottom-up fashion. Essentially, we want to find the maximum profit for every sub-array and for every possible capacity. <strong>This means, <code>dp&#91;i&#93;&#91;c&#93;</code> will represent the maximum knapsack profit for capacity <code>c</code> calculated from the first <code>i</code> items.</strong></p> <p>So, for each item at index <code>i</code> &#40;0 &lt;&#61; i &lt; items.length&#41; and capacity <code>c</code> &#40;0 &lt;&#61; c &lt;&#61; capacity&#41;, we have two options:</p> <ul> <li><p>Exclude the item at index <code>i</code>. In this case, we will take whatever profit we get from the sub-array excluding this item &#61;&gt; <code>dp&#91;i-1&#93;&#91;c&#93;</code></p> <li><p>Include the item at index <code>i</code> if its weight is not more than the capacity. In this case, we include its profit plus whatever profit we get from the remaining capacity and from remaining items &#61;&gt; <code>profits&#91;i&#93; &#43; dp&#91;i-1&#93;&#91;c-weights&#91;i&#93;&#93;</code></p> </ul> <p>Finally, our optimal solution will be maximum of the above two values:</p> <pre><code class="Plaintext hljs">dp[i][c] = max (dp[i-1][c], profits[i] + dp[i-1][c-weights[i]])</code></pre>
+<p>Let’s visually draw this and start with our base case of zero capacity:</p>
+<p><img src="/Dynamic-Programming-Patterns/assets/img/0-1-knapsack/1.3.png" alt="" /></p>
+<h3 id=code__3 ><a href="#code__3" class=header-anchor >Code</a></h3>
+<p>Here is the code for our bottom-up dynamic programming approach:</p>
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-comment ># basic checks</span>
+    n = <span class=hljs-built_in >len</span>(profits)
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> n == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> <span class=hljs-built_in >len</span>(weights) != n:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    dp = [[<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> y <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    <span class=hljs-comment ># populate the capacity = 0 columns, with &#x27;0&#x27; capacity we have &#x27;0&#x27; profit</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, n):
+        dp[i][<span class=hljs-number >0</span>] = <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># if we have only one weight, we will take it if it is not more than the capacity</span>
+    <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, capacity+<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >if</span> weights[<span class=hljs-number >0</span>] &lt;= c:
+            dp[<span class=hljs-number >0</span>][c] = profits[<span class=hljs-number >0</span>]
+
+    <span class=hljs-comment ># process all sub-arrays for all the capacities</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, capacity+<span class=hljs-number >1</span>):
+            profit1, profit2 = <span class=hljs-number >0</span>, <span class=hljs-number >0</span>
+            <span class=hljs-comment ># include the item, if it is not more than the capacity</span>
+            <span class=hljs-keyword >if</span> weights[i] &lt;= c:
+                profit1 = profits[i] + dp[i - <span class=hljs-number >1</span>][c - weights[i]]
+            <span class=hljs-comment ># exclude the item</span>
+            profit2 = dp[i - <span class=hljs-number >1</span>][c]
+            <span class=hljs-comment ># take maximum</span>
+            dp[i][c] = <span class=hljs-built_in >max</span>(profit1, profit2)
+
+    <span class=hljs-comment ># maximum profit will be at the bottom-right corner.</span>
+    <span class=hljs-keyword >return</span> dp[n - <span class=hljs-number >1</span>][capacity]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >5</span>))
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>))
+    <span class=hljs-built_in >print</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>))
+
+
+main()</code></pre>
+
+    <div class="admonition complexity">
+        <div class=admonition-title >👉 Complexity</div>
+        <div class=admonition-content >The above solution has a time and space complexity of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N*C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span>, where <code>N</code> represents total items, and <code>C</code> is the maximum capacity.</div>
+    </div>
+    
+<h2 id=how_to_find_the_selected_items ><a href="#how_to_find_the_selected_items" class=header-anchor >How to find the selected items?</a></h2>
+<p>As we know that the final profit is at the bottom-right corner; therefore, we will start from there to find the items that will be going in the knapsack.</p>
+<p>As you remember, at every step, we had two options: include an item or skip it. If we skip an item, then we take the profit from the remaining items &#40;i.e., from the cell right above it&#41;; if we include the item, then we jump to the remaining profit to find more items.</p>
+<p>Let’s understand this from the above example:</p>
+<p><img src="/Dynamic-Programming-Patterns/assets/img/0-1-knapsack/1.4.svg" alt="" /></p>
+<ul>
+<li><p><code>22</code> did not come from the top cell &#40;which is 17&#41;; hence we must include the item at index <code>3</code> &#40;which is the item <code>D</code>&#41;.</p>
+
+<li><p>Subtract the profit of item <code>D</code> from <code>22</code> to get the remaining profit <code>6</code>. We then jump to profit <code>6</code> on the same row.</p>
+
+<li><p><code>6</code> came from the top cell, so we jump to row <code>2</code>.</p>
+
+<li><p>Again, <code>6</code> came from the top cell, so we jump to row <code>1</code>.</p>
+
+<li><p><code>6</code> is different than the top cell, so we must include this item &#40;which is item <code>B</code>&#41;.</p>
+
+<li><p>Subtract the profit of <code>B</code> from <code>6</code> to get the profit <code>0</code>. We then jump to profit <code>0</code> on the same row. As soon as we hit zero remaining profit, we can finish our item search.</p>
+
+<li><p>So items going into the knapsack are &#123;B, D&#125;.</p>
+
+</ul>
+<p>Let&#39; s write a function to print the set of items included in the knapsack.</p>
+<pre><code class="python hljs"><span class=hljs-keyword >from</span> __future__ <span class=hljs-keyword >import</span> print_function
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-comment ># basic checks</span>
+    n = <span class=hljs-built_in >len</span>(profits)
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> n == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> <span class=hljs-built_in >len</span>(weights) != n:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    dp = [[<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> y <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    <span class=hljs-comment ># populate the capacity = 0 columns, with &#x27;0&#x27; capacity we have &#x27;0&#x27; profit</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, n):
+        dp[i][<span class=hljs-number >0</span>] = <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># if we have only one weight, we will take it if it is not more than the capacity</span>
+    <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, capacity+<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >if</span> weights[<span class=hljs-number >0</span>] &lt;= c:
+            dp[<span class=hljs-number >0</span>][c] = profits[<span class=hljs-number >0</span>]
+
+    <span class=hljs-comment ># process all sub-arrays for all the capacities</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, capacity+<span class=hljs-number >1</span>):
+            profit1, profit2 = <span class=hljs-number >0</span>, <span class=hljs-number >0</span>
+            <span class=hljs-comment ># include the item, if it is not more than the capacity</span>
+            <span class=hljs-keyword >if</span> weights[i] &lt;= c:
+                profit1 = profits[i] + dp[i - <span class=hljs-number >1</span>][c - weights[i]]
+            <span class=hljs-comment ># exclude the item</span>
+            profit2 = dp[i - <span class=hljs-number >1</span>][c]
+            <span class=hljs-comment ># take maximum</span>
+            dp[i][c] = <span class=hljs-built_in >max</span>(profit1, profit2)
+
+    print_selected_elements(dp, weights, profits, capacity)
+    <span class=hljs-comment ># maximum profit will be at the bottom-right corner.</span>
+    <span class=hljs-keyword >return</span> dp[n - <span class=hljs-number >1</span>][capacity]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">print_selected_elements</span>(<span class=hljs-params >dp, weights, profits, capacity</span>):
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Selected weights are: &quot;</span>, end=<span class=hljs-string >&#x27;&#x27;</span>)
+    n = <span class=hljs-built_in >len</span>(weights)
+    totalProfit = dp[n-<span class=hljs-number >1</span>][capacity]
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n-<span class=hljs-number >1</span>, <span class=hljs-number >0</span>, -<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >if</span> totalProfit != dp[i - <span class=hljs-number >1</span>][capacity]:
+            <span class=hljs-built_in >print</span>(<span class=hljs-built_in >str</span>(weights[i]) + <span class=hljs-string >&quot; &quot;</span>, end=<span class=hljs-string >&#x27;&#x27;</span>)
+            capacity -= weights[i]
+            totalProfit -= profits[i]
+
+    <span class=hljs-keyword >if</span> totalProfit != <span class=hljs-number >0</span>:
+        <span class=hljs-built_in >print</span>(<span class=hljs-built_in >str</span>(weights[<span class=hljs-number >0</span>]) + <span class=hljs-string >&quot; &quot;</span>, end=<span class=hljs-string >&#x27;&#x27;</span>)
+    <span class=hljs-built_in >print</span>()
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>)))
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>)))
+
+
+main()</code></pre>
+<h2 id=challenge ><a href="#challenge" class=header-anchor >Challenge</a></h2>
+<p>Can we further improve our bottom-up DP solution? Can you find an algorithm that has <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span> space complexity?</p>
+
+    <div class="admonition hint">
+        <div class=admonition-title >Hint</div>
+        <div class=admonition-content >We only need one previous row to find the optimal solution&#33;</div>
+    </div>
+    
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-comment ># basic checks</span>
+    n = <span class=hljs-built_in >len</span>(profits)
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> n == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> <span class=hljs-built_in >len</span>(weights) != n:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># we only need one previous row to find the optimal solution, overall we need &#x27;2&#x27; rows</span>
+    <span class=hljs-comment ># the above solution is similar to the previous solution, the only difference is that</span>
+    <span class=hljs-comment ># we use `i % 2` instead if `i` and `(i-1) % 2` instead if `i-1`</span>
+    dp = [[<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> y <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >2</span>)]
+
+    <span class=hljs-comment ># if we have only one weight, we will take it if it is not more than the capacity</span>
+    <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, capacity+<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >if</span> weights[<span class=hljs-number >0</span>] &lt;= c:
+            dp[<span class=hljs-number >0</span>][c] = dp[<span class=hljs-number >1</span>][c] = profits[<span class=hljs-number >0</span>]
+
+    <span class=hljs-comment ># process all sub-arrays for all the capacities</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, capacity+<span class=hljs-number >1</span>):
+            profit1, profit2 = <span class=hljs-number >0</span>, <span class=hljs-number >0</span>
+            <span class=hljs-comment ># include the item, if it is not more than the capacity</span>
+            <span class=hljs-keyword >if</span> weights[i] &lt;= c:
+                profit1 = profits[i] + dp[(i - <span class=hljs-number >1</span>) % <span class=hljs-number >2</span>][c - weights[i]]
+            <span class=hljs-comment ># exclude the item</span>
+            profit2 = dp[(i - <span class=hljs-number >1</span>) % <span class=hljs-number >2</span>][c]
+            <span class=hljs-comment ># take maximum</span>
+            dp[i % <span class=hljs-number >2</span>][c] = <span class=hljs-built_in >max</span>(profit1, profit2)
+
+    <span class=hljs-keyword >return</span> dp[(n - <span class=hljs-number >1</span>) % <span class=hljs-number >2</span>][capacity]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>)))
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>)))
+
+
+main()</code></pre>
+<p>The above solution is similar to the previous solution; the only difference is that we use <code>i&#37;2</code> instead of <code>i</code> and <code>&#40;i-1&#41;&#37;2</code> instead of <code>i-1</code>. This solution has a space complexity of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mn>2</mn><mo>∗</mo><mi>C</mi><mo stretchy=false >)</mo><mo>=</mo><mi>O</mi><mo stretchy=false >(</mo><mi>C</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(2*C) = O(C)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord >2</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span><span class=mrel >=</span><span class=mspace  style="margin-right:0.2777777777777778em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class=mclose >)</span></span></span></span>, where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> is the knapsack’s maximum capacity.</p>
+<p>This space optimization solution can also be implemented using a single array. It is a bit tricky though, but the intuition is to use the same array for the previous and the next iteration&#33;</p>
+<p>If you see closely, we need two values from the previous iteration: <code>dp&#91;c&#93; and dp&#91;c-weight&#91;i&#93;&#93;</code></p>
+<p>Since our inner loop is iterating over <code>c:0--&gt;capacity</code>, let’s see how this might affect our two required values:</p>
+<ul>
+<li><p>When we access <code>dp&#91;c&#93;</code>, it has not been overridden yet for the current iteration, so it should be fine.</p>
+
+<li><p><code>dp&#91;c-weight&#91;i&#93;&#93;</code> might be overridden if <code>weight&#91;i&#93; &gt; 0</code>. Therefore we can’t use this value for the current iteration.</p>
+
+</ul>
+<p>To solve the second case, we can change our inner loop to process in the reverse direction: <code>c:capacity--&gt;0</code>. This will ensure that whenever we change a value in <code>dp&#91;&#93;</code>, we will not need it anymore in the current iteration.</p>
+<p>Can you try writing this algorithm?</p>
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">solve_knapsack</span>(<span class=hljs-params >profits, weights, capacity</span>):
+    <span class=hljs-comment ># basic checks</span>
+    n = <span class=hljs-built_in >len</span>(profits)
+    <span class=hljs-keyword >if</span> capacity &lt;= <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> n == <span class=hljs-number >0</span> <span class=hljs-keyword >or</span> <span class=hljs-built_in >len</span>(weights) != n:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    dp = [<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity+<span class=hljs-number >1</span>)]
+
+    <span class=hljs-comment ># if we have only one weight, we will take it if it is not more than the capacity</span>
+    <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, capacity+<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >if</span> weights[<span class=hljs-number >0</span>] &lt;= c:
+            dp[c] = profits[<span class=hljs-number >0</span>]
+
+    <span class=hljs-comment ># process all sub-arrays for all the capacities</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(capacity, -<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>):
+            profit1, profit2 = <span class=hljs-number >0</span>, <span class=hljs-number >0</span>
+            <span class=hljs-comment ># include the item, if it is not more than the capacity</span>
+            <span class=hljs-keyword >if</span> weights[i] &lt;= c:
+                profit1 = profits[i] + dp[c - weights[i]]
+            <span class=hljs-comment ># exclude the item</span>
+            profit2 = dp[c]
+            <span class=hljs-comment ># take maximum</span>
+            dp[c] = <span class=hljs-built_in >max</span>(profit1, profit2)
+
+    <span class=hljs-keyword >return</span> dp[capacity]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >7</span>)))
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total knapsack profit: &quot;</span> +
+          <span class=hljs-built_in >str</span>(solve_knapsack([<span class=hljs-number >1</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >16</span>], [<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >5</span>], <span class=hljs-number >6</span>)))
+
+
+main()</code></pre>
+<h2 id=next ><a href="#next" class=header-anchor >Next</a></h2>
+<div class=flist ><ul>
+<li><p><a href="/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition" id=goto ><span id=check >&check;</span><span id=arrow ><b>&rarr;</b></span></a> Equal Subset Sum Partition</p>
+
+</ul></div>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Qling Alter. Last modified: June 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+    </div> 
+    </div> 
+    </div> <!-- end of class page-wrap-->

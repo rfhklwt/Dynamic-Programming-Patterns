@@ -1,0 +1,121 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/katex/katex.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/highlight/github.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/franklin.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/poole_hyde.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/custom.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <title>Equal Subset Sum Partition</title> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr.min.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr_index.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunrclient.min.js"></script> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <br> <img src="/Dynamic-Programming-Patterns/assets/infra/DP.svg" style="width: 160px; height: auto; display: inline"> <h1> <div style="line-height:18px; font-size: 20px; opacity: 0.85"><a href="/Dynamic-Programming-Patterns/">Dynamic Programming Patterns</a></div> </h1> <div style="line-height:18px; font-size: 15px; opacity: 0.85">by <a href="https://github.com/rfhklwt">Inia Owlet</a></div> </div> <br> <style> </style> <nav class=sidebar-nav  style="opacity: 0.9"> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/"><b>Overview</b></a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/introduction"><b>Introduction</b></a> <br> <div class=course-section >Pattern 1: 0/1 Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/"><b>1.0</b> - 0/1 Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition/"><b>1.1</b> - Equal Subset Sum Partition</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/subset-sum/"><b>1.2</b> - Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/minimum-subset-sum-difference/"><b>1.3</b> - Minimum Subset Sum Difference</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/"><b>1.4</b> - Count of Subset Sum</a> <a class="sidebar-nav-item active" href="/Dynamic-Programming-Patterns/0-1-knapsack/target-sum/"><b>1.5</b> - Target Sum</a> <div class=course-section >Pattern 2: Unbounded Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/"><b>2.0</b> - Unbouned Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/rod-cutting/"><b>2.1</b> - Rod Cutting</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/coin-change/"><b>2.2</b> - Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/minimum-coin-change/"><b>2.3</b> - Minimum Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/maximum-ribbon-cut/"><b>2.4</b> - Maximum Ribbon Cut</a> <div class=course-section >Pattern 3: Fast & Slow Pointers</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/"><b>3.0</b> - Fibonacci Numbers</a> <br> </nav> </div> </div> <div class="content container"> <div class=franklin-content ><h1 id=equal_subset_sum_partition ><a href="#equal_subset_sum_partition" class=header-anchor >Equal Subset Sum Partition</a></h1> <span style="font-size:24px;font-weight:300;">We'll cover the following</span> <div class=blank ></div> <div class=franklin-toc ><ol><li><a href="#problem_statement">Problem Statement</a><li><a href="#solution">Solution</a><ol><li><a href="#code">Code</a></ol><li><a href="#space_optimized_solution">Space Optimized Solution</a><li><a href="#next">Next</a></ol></div> <div class=blank ></div> <h2 id=problem_statement ><a href="#problem_statement" class=header-anchor >Problem Statement</a></h2> <div class="admonition question"> <div class=admonition-title >🙋 Question</div> <div class=admonition-content >Given a set of positive numbers &#40;non zero&#41; and a target sum <code>S</code>. Each number should be assigned either a <code>&#43;</code> or <code>-</code> sign. We need to find out total ways to assign symbols to make the sum of numbers equal to target <code>S</code>.</div> </div> <ul> <li><p>Example 1</p> </ul> <pre><code class="Plaintext hljs">Input: {1, 1, 2, 3}, S=1
+Output: 3
+Explanation: The given set has &#x27;3&#x27; ways to make a sum of &#x27;1&#x27;: {+1-1-2+3} &amp; {-1+1-2+3} &amp; {+1+1+2-3}</code></pre> <ul> <li><p>Example 2</p> </ul> <pre><code class="Plaintext hljs">Input: {1, 2, 7, 1}, S=9
+Output: 2
+Explanation: The given set has &#x27;2&#x27; ways to make a sum of &#x27;9&#x27;: {+1+2+7-1} &amp; {-1+2+7+1}</code></pre> <h2 id=solution ><a href="#solution" class=header-anchor >Solution</a></h2> <p>This problem follows the <strong>0/1 Knapsack pattern</strong> and can be converted into <a href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/">Count of Subset Sum</a>. Let’s dig into this.</p> <p>We are asked to find two subsets of the given numbers whose difference is equal to the given target <code>S</code>. Take the first example above. As we saw, one solution is &#123;&#43;1-1-2&#43;3&#125;. So, the two subsets we are asked to find are &#123;1, 3&#125; &amp; &#123;1, 2&#125; because,</p> <pre><code class="Plaintext hljs">(1 + 3) - (1 + 2 ) = 1</code></pre>
+<p>Now, let’s say <code>Sum&#40;s1&#41;</code> denotes the total sum of set <code>s1</code>, and <code>Sum&#40;s2&#41;</code> denotes the total sum of set <code>s2</code>. So the required equation is:</p>
+<pre><code class="Plaintext hljs">Sum(s1) - Sum(s2) = S</code></pre>
+<p>This equation can be reduced to the subset sum problem. Let’s assume that <code>Sum&#40;num&#41;</code> denotes the total sum of all the numbers, therefore:</p>
+<pre><code class="Plaintext hljs">Sum(s1) + Sum(s2) = Sum(num)</code></pre>
+<p>Let’s add the above two equations:</p>
+<pre><code class="Plaintext hljs">=&gt; Sum(s1) - Sum(s2) + Sum(s1) + Sum(s2) = S + Sum(num)
+=&gt; 2 * Sum(s1) =  S + Sum(num)
+=&gt; Sum(s1) = (S + Sum(num)) / 2</code></pre>
+<p>This essentially converts our problem to: “Find count of subsets of the given numbers whose sum is equal to”,</p>
+<pre><code class="Plaintext hljs">=&gt; (S + Sum(num)) / 2</code></pre>
+<h3 id=code ><a href="#code" class=header-anchor >Code</a></h3>
+<p>Let’s take the dynamic programming code of <a href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/">Count of Subset Sum</a> and extend it to solve this problem:</p>
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_target_subsets</span>(<span class=hljs-params >num, s</span>):
+    <span class=hljs-keyword >if</span> <span class=hljs-built_in >any</span>(i &lt; <span class=hljs-number >1</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> num):
+        <span class=hljs-keyword >return</span> -<span class=hljs-number >1</span>  <span class=hljs-comment ># invalid input, the problem expects only positive numbers</span>
+    totalSum = <span class=hljs-built_in >sum</span>(num)
+
+    <span class=hljs-comment ># if &#x27;s + totalSum&#x27; is odd, we can&#x27;t find a subset with sum equal to &#x27;(s + totalSum) / 2&#x27;</span>
+    <span class=hljs-keyword >if</span> totalSum &lt; s <span class=hljs-keyword >or</span> (s + totalSum) % <span class=hljs-number >2</span> == <span class=hljs-number >1</span>:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-keyword >return</span> count_subsets(num, <span class=hljs-built_in >int</span>((s + totalSum) / <span class=hljs-number >2</span>))
+
+
+<span class=hljs-comment ># this function is exactly similar to what we have in &#x27;Count of Subset Sum&#x27; problem.</span>
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">count_subsets</span>(<span class=hljs-params >num, s</span>):
+    n = <span class=hljs-built_in >len</span>(num)
+    dp = [[<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(s+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> y <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    <span class=hljs-comment ># populate the sum = 0 columns, as we will always have an empty set for zero sum</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >0</span>, n):
+        dp[i][<span class=hljs-number >0</span>] = <span class=hljs-number >1</span>
+
+    <span class=hljs-comment ># with only one number, we can form a subset only when the required sum is</span>
+    <span class=hljs-comment ># equal to the number</span>
+    <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, s+<span class=hljs-number >1</span>):
+        dp[<span class=hljs-number >0</span>][s] = <span class=hljs-number >1</span> <span class=hljs-keyword >if</span> num[<span class=hljs-number >0</span>] == s <span class=hljs-keyword >else</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># process all subsets for all sums</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, s+<span class=hljs-number >1</span>):
+            dp[i][s] = dp[i - <span class=hljs-number >1</span>][s]
+            <span class=hljs-keyword >if</span> s &gt;= num[i]:
+                dp[i][s] += dp[i - <span class=hljs-number >1</span>][s - num[i]]
+
+    <span class=hljs-comment ># the bottom-right corner will have our answer.</span>
+    <span class=hljs-keyword >return</span> dp[n - <span class=hljs-number >1</span>][s]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total ways: &quot;</span> + <span class=hljs-built_in >str</span>(find_target_subsets([<span class=hljs-number >1</span>, <span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>], <span class=hljs-number >1</span>)))
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total ways: &quot;</span> + <span class=hljs-built_in >str</span>(find_target_subsets([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >7</span>, <span class=hljs-number >1</span>], <span class=hljs-number >9</span>)))
+
+
+main()</code></pre>
+
+    <div class="admonition complexity">
+        <div class=admonition-title >👉 Complexity</div>
+        <div class=admonition-content >The above solution has time and space complexity of <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>N</mi><mo>∗</mo><mi>S</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(N*S)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span><span class=mbin >∗</span><span class=mspace  style="margin-right:0.2222222222222222em;"></span></span><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class=mclose >)</span></span></span></span>, where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span> represents total numbers and <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span> is the desired sum.</p>
+<p>We can further improve the solution to use only <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>S</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(S)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class=mclose >)</span></span></span></span> space.</div>
+    </div>
+    
+<h2 id=space_optimized_solution ><a href="#space_optimized_solution" class=header-anchor >Space Optimized Solution</a></h2>
+<p>Here is the code for the space-optimized solution, using only a single array:</p>
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_target_subsets</span>(<span class=hljs-params >num, s</span>):
+    <span class=hljs-keyword >if</span> <span class=hljs-built_in >any</span>(i &lt; <span class=hljs-number >1</span> <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> num):
+        <span class=hljs-keyword >return</span> -<span class=hljs-number >1</span>  <span class=hljs-comment ># invalid input, the problem expects only positive numbers</span>
+
+    totalSum = <span class=hljs-built_in >sum</span>(num)
+
+    <span class=hljs-comment ># if &#x27;s + totalSum&#x27; is odd, we can&#x27;t find a subset with sum equal to &#x27;(s +totalSum) / 2&#x27;</span>
+    <span class=hljs-keyword >if</span> totalSum &lt; s <span class=hljs-keyword >or</span> (s + totalSum) % <span class=hljs-number >2</span> == <span class=hljs-number >1</span>:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-keyword >return</span> count_subsets(num, <span class=hljs-built_in >int</span>((s + totalSum) / <span class=hljs-number >2</span>))
+
+
+<span class=hljs-comment ># this function is exactly similar to what we have in &#x27;Count of Subset Sum&#x27; problem</span>
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">count_subsets</span>(<span class=hljs-params >num, <span class=hljs-built_in >sum</span></span>):
+    n = <span class=hljs-built_in >len</span>(num)
+    dp = [<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-built_in >sum</span>+<span class=hljs-number >1</span>)]
+    dp[<span class=hljs-number >0</span>] = <span class=hljs-number >1</span>
+
+    <span class=hljs-comment ># with only one number, we can form a subset only when the required sum is equal to the number</span>
+    <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, <span class=hljs-built_in >sum</span>+<span class=hljs-number >1</span>):
+        dp[s] = <span class=hljs-number >1</span> <span class=hljs-keyword >if</span> num[<span class=hljs-number >0</span>] == s <span class=hljs-keyword >else</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># process all subsets for all sums</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >1</span>, n):
+        <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-built_in >sum</span>, -<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>):
+            <span class=hljs-keyword >if</span> s &gt;= num[i]:
+                dp[s] += dp[s - num[i]]
+
+    <span class=hljs-keyword >return</span> dp[<span class=hljs-built_in >sum</span>]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total ways: &quot;</span> + <span class=hljs-built_in >str</span>(find_target_subsets([<span class=hljs-number >1</span>, <span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>], <span class=hljs-number >1</span>)))
+    <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;Total ways: &quot;</span> + <span class=hljs-built_in >str</span>(find_target_subsets([<span class=hljs-number >1</span>, <span class=hljs-number >2</span>, <span class=hljs-number >7</span>, <span class=hljs-number >1</span>], <span class=hljs-number >9</span>)))
+
+
+main()</code></pre>
+<h2 id=next ><a href="#next" class=header-anchor >Next</a></h2>
+<div class=flist ><ul>
+<li><p><a href="/Dynamic-Programming-Patterns/unbounded-knapsack/" id=goto ><span id=check >&check;</span><span id=arrow ><b>&rarr;</b></span></a> Unbounded Knapsack Pattern</p>
+
+</ul></div>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Qling Alter. Last modified: June 09, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+    </div> 
+    </div> 
+    </div> <!-- end of class page-wrap-->
