@@ -279,8 +279,10 @@ td {
 ================================================================== */
 
 .franklin-content img {
-    width: 90%;
+    width: auto;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .franklin-content .img-small img {
