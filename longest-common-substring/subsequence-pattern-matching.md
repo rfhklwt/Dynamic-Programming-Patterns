@@ -1,6 +1,6 @@
 @def hascode = true
 
-# Longest Repeating Subsequence
+# Subsequence pattern matching
 
 \blurb{We'll cover the following}
 

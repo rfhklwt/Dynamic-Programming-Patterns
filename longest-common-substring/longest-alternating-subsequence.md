@@ -1,6 +1,6 @@
 @def hascode = true
 
-# Longest Bitonic Subsequence
+# Longest Alternating Subsequence
 
 \blurb{We'll cover the following}
 
