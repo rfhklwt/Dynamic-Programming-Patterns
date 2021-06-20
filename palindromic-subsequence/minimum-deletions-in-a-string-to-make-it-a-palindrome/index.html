@@ -1,0 +1,101 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/katex/katex.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/highlight/github.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/franklin.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/poole_hyde.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/custom.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <title>Minimum Deletions in a String to make it a Palindrome</title> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr.min.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr_index.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunrclient.min.js"></script> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <br> <img src="/Dynamic-Programming-Patterns/assets/infra/DP.svg" style="width: 160px; height: auto; display: inline"> <h1> <div style="line-height:18px; font-size: 20px; opacity: 0.85"><a href="/Dynamic-Programming-Patterns/">Dynamic Programming Patterns</a></div> </h1> <div style="line-height:18px; font-size: 15px; opacity: 0.85">by <a href="https://github.com/rfhklwt">Inia Owlet</a></div> </div> <br> <style> </style> <nav class=sidebar-nav  style="opacity: 0.9"> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/"><b>Overview</b></a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/introduction"><b>Introduction</b></a> <br> <div class=course-section >Pattern 1: 0/1 Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/"><b>1.0</b> - 0/1 Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition/"><b>1.1</b> - Equal Subset Sum Partition</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/subset-sum/"><b>1.2</b> - Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/minimum-subset-sum-difference/"><b>1.3</b> - Minimum Subset Sum Difference</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/"><b>1.4</b> - Count of Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/target-sum/"><b>1.5</b> - Target Sum</a> <div class=course-section >Pattern 2: Unbounded Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/"><b>2.0</b> - Unbouned Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/rod-cutting/"><b>2.1</b> - Rod Cutting</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/coin-change/"><b>2.2</b> - Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/minimum-coin-change/"><b>2.3</b> - Minimum Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/maximum-ribbon-cut/"><b>2.4</b> - Maximum Ribbon Cut</a> <div class=course-section >Pattern 3: Fibonacci Numbers</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/"><b>3.0</b> - Fibonacci Numbers</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/staircase/"><b>3.1</b> - Staircase</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/number-factors/"><b>3.2</b> - Number factors</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-to-reach-the-end/"><b>3.3</b> - Minimum jumps to reach the end</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-with-fee/"><b>3.4</b> - Minimum jumps with fee</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/house-thief/"><b>3.5</b> - House thief</a> <div class=course-section >Pattern 4: Palindromic Subsequence</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/"><b>4.0</b> - Longest Palindromic Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/longest-palindromic-substring/"><b>4.1</b> - Longest Palindromic Substring</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/count-of-palindromic-substrings/"><b>4.2</b> - Count of Palindromic Substrings</a> <a class="sidebar-nav-item active" href="/Dynamic-Programming-Patterns/palindromic-subsequence/minimum-deletions-in-a-string-to-make-it-a-palindrome/"><b>4.3</b> - Minimum Deletions in a String to make it a Palindrome</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/palindromic-partitioning/"><b>4.4</b> - Palindromic Partitioning</a> <div class=course-section >Pattern 5: Longest Common Substring</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/"><b>5.0</b> - Longest Common Substring</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-common-subsequence/"><b>5.1</b> - Longest Common Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/count-of-palindromic-substrings/"><b>5.2</b> - Minimum Deletions & Insertions to Transform a String into another</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/minimum-deletions&insertions-to-transform-a-string-into-another/"><b>4.0</b> - Longest Increasing Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/maximum-sum-increasing-subsequence/"><b>5.3</b> - Maximum Sum Increasing Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/shortest-common-super-sequence/"><b>5.4</b> - Shortest Common Super-sequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/count-of-palindromic-substrings/"><b>5.5</b> - Minimum Deletions to Make a Sequence Sorted</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-repeating-subsequence/"><b>5.6</b> - Longest Repeating Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/subsequence-pattern-matching/"><b>5.7</b> - Subsequence Pattern Matching</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-bitonic-subsequence/"><b>5.8</b> - Longest Bitonic Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-alternating-subsequence/"><b>5.9</b> - Longest Alternating Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/edit-distance/"><b>4.0</b> - Edit Distance</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/strings-interleaving/"><b>5.10</b> - Strings Interleaving</a> <br> </nav> </div> </div> <div class="content container"> <div class=franklin-content ><h1 id=minimum_deletions_in_a_string_to_make_it_a_palindrome ><a href="#minimum_deletions_in_a_string_to_make_it_a_palindrome" class=header-anchor >Minimum Deletions in a String to make it a Palindrome</a></h1> <span style="font-size:24px;font-weight:300;">We'll cover the following</span> <div class=blank ></div> <div class=franklin-toc ><ol><li><a href="#problem_statement">Problem Statement</a><li><a href="#solution">Solution</a><ol><li><a href="#code">Code</a></ol><li><a href="#similar_problem">Similar problem</a><ol><li><a href="#minimum_insertions_in_a_string_to_make_it_a_palindrome"><ol> <li><p>Minimum insertions in a string to make it a palindrome</p> </ol> </a><li><a href="#ol_start2_find_if_a_string_is_k-palindromic"><ol start=2 > <li><p>Find if a string is K-Palindromic</p> </ol> </a></ol><li><a href="#next">Next</a></ol></div> <div class=blank ></div> <h2 id=problem_statement ><a href="#problem_statement" class=header-anchor >Problem Statement</a></h2> <div class="admonition question"> <div class=admonition-title >🙋 Question</div> <div class=admonition-content >Given a string, find the minimum number of characters that we can remove to make it a palindrome.</div> </div> <ul> <li><p>Example 1</p> </ul> <pre><code class="Plaintext hljs">Input: &quot;abdbca&quot;
+Output: 1
+Explanation: By removing &quot;c&quot;, we get a palindrome &quot;abdba&quot;.</code></pre> <ul> <li><p>Example 2</p> </ul> <pre><code class="Plaintext hljs">Input: = &quot;cddpd&quot;
+Output: 2
+Explanation: Deleting &quot;cp&quot;, we get a palindrome &quot;ddd&quot;.</code></pre> <ul> <li><p>Example 3</p> </ul> <pre><code class="Plaintext hljs">Input: = &quot;pqr&quot;
+Output: 2
+Explanation: We have to remove any two characters to get a palindrome, e.g. if we 
+remove &quot;pq&quot;, we get palindrome &quot;r&quot;.</code></pre> <h2 id=solution ><a href="#solution" class=header-anchor >Solution</a></h2> <p>This problem can be easily converted to the <a href="/Dynamic-Programming-Patterns/palindromic-subsequence/index.html">Longest Palindromic Subsequence</a> problem. We can use the fact that LPS is the best subsequence we can have, so any character that is not part of LPS must be removed. Please note that it is <strong>Longest Palindromic SubSequence</strong> and not <strong>Longest Palindrome Substring</strong>.</p> <p>So, our solution for a given string <code>st</code> will be:</p> <pre><code class="Plaintext hljs">Minimum_deletions_to_make_palindrome = Length(st) - LPS(st)</code></pre>
+<h3 id=code ><a href="#code" class=header-anchor >Code</a></h3>
+<p>Let’s jump directly to bottom-up dynamic programming:</p>
+<pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_minimum_deletions</span>(<span class=hljs-params >st</span>):
+    <span class=hljs-comment ># subtracting the length of Longest Palindromic Subsequence from the length of</span>
+    <span class=hljs-comment ># the input string to get minimum number of deletions</span>
+    <span class=hljs-keyword >return</span> <span class=hljs-built_in >len</span>(st) - find_LPS_length(st)
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LPS_length</span>(<span class=hljs-params >st</span>):
+    n = <span class=hljs-built_in >len</span>(st)
+    <span class=hljs-comment ># dp[i][j] stores the length of LPS from index &#x27;i&#x27; to index &#x27;j&#x27;</span>
+    dp = [[<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)] <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    <span class=hljs-comment ># every sequence with one element is a palindrome of length 1</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n):
+        dp[i][i] = <span class=hljs-number >1</span>
+
+    <span class=hljs-keyword >for</span> startIndex <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n - <span class=hljs-number >1</span>, -<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>):
+        <span class=hljs-keyword >for</span> endIndex <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(startIndex + <span class=hljs-number >1</span>, n):
+            <span class=hljs-comment ># case 1: elements at the beginning and the end are the same</span>
+            <span class=hljs-keyword >if</span> st[startIndex] == st[endIndex]:
+                dp[startIndex][endIndex] = <span class=hljs-number >2</span> + dp[startIndex + <span class=hljs-number >1</span>][endIndex - <span class=hljs-number >1</span>]
+            <span class=hljs-keyword >else</span>:  <span class=hljs-comment ># case 2: skip one element either from the beginning or the end</span>
+                dp[startIndex][endIndex] = <span class=hljs-built_in >max</span>(
+                    dp[startIndex + <span class=hljs-number >1</span>][endIndex], dp[startIndex][endIndex - <span class=hljs-number >1</span>])
+
+    <span class=hljs-keyword >return</span> dp[<span class=hljs-number >0</span>][n - <span class=hljs-number >1</span>]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(find_minimum_deletions(<span class=hljs-string >&quot;abdbca&quot;</span>))
+    <span class=hljs-built_in >print</span>(find_minimum_deletions(<span class=hljs-string >&quot;cddpd&quot;</span>))
+    <span class=hljs-built_in >print</span>(find_minimum_deletions(<span class=hljs-string >&quot;pqr&quot;</span>))
+
+
+main()</code></pre>
+
+    <div class="admonition complexity">
+        <div class=admonition-title >👉 Complexity</div>
+        <div class=admonition-content >The time and space complexity of the above algorithm is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord ><span class="mord mathdefault">n</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span>, where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> is the length of the input string.</div>
+    </div>
+    
+<h2 id=similar_problem ><a href="#similar_problem" class=header-anchor >Similar problem</a></h2>
+<p>Here are a couple of similar problems:</p>
+<h3 id=minimum_insertions_in_a_string_to_make_it_a_palindrome ><a href="#minimum_insertions_in_a_string_to_make_it_a_palindrome" class=header-anchor ><ol>
+<li><p>Minimum insertions in a string to make it a palindrome</p>
+
+</ol>
+</a></h3>
+<p>Will the above approach work if we make insertions instead of deletions?</p>
+<p>Yes, the length of the Longest Palindromic Subsequence is the best palindromic subsequence we can have. Let’s take a few examples:</p>
+<ul>
+<li><p>Example 1</p>
+
+</ul>
+<pre><code class="Plaintext hljs">Input: &quot;abdbca&quot;   
+Output: 1</code></pre>
+<p>Explanation: By inserting <code>c</code>, we get a palindrome <code>acbdbca</code>.</p>
+<ul>
+<li><p>Example 2</p>
+
+</ul>
+<pre><code class="Plaintext hljs">Input: = &quot;cddpd&quot;  
+Output: 2</code></pre>
+<p>Explanation: Inserting <code>cp</code>, we get a palindrome <code>cdpdpdc</code>. We can also get a palindrome by inserting <code>dc</code>: <code>cddpddc</code></p>
+<ul>
+<li><p>Example 3</p>
+
+</ul>
+<pre><code class="Plaintext hljs">Input: = &quot;pqr&quot;  
+Output: 2</code></pre>
+<p>Explanation: We have to insert any two characters to get a palindrome &#40;e.g. if we insert <code>pq</code>, we get a palindrome <code>pqrqp</code>&#41;.</p>
+<h3 id=ol_start2_find_if_a_string_is_k-palindromic ><a href="#ol_start2_find_if_a_string_is_k-palindromic" class=header-anchor ><ol start=2 >
+<li><p>Find if a string is K-Palindromic</p>
+
+</ol>
+</a></h3>
+<p>Any string will be called K-palindromic if it can be transformed into a palindrome by removing at most <code>K</code> characters from it.</p>
+<p>This problem can easily be converted to our base problem of finding the minimum deletions in a string to make it a palindrome. If the “minimum deletion count” is not more than <code>K</code>, the string will be K-Palindromic.</p>
+<h2 id=next ><a href="#next" class=header-anchor >Next</a></h2>
+<div class=flist ><ul>
+<li><p><a href="/Dynamic-Programming-Patterns/palindromic-subsequence/palindromic-partitioning" id=goto ><span id=check >&check;</span><span id=arrow ><b>&rarr;</b></span></a> Palindromic Partitioning</p>
+
+</ul></div>
+<div class=page-foot >
+  <div class=copyright >
+    &copy; Qling Alter. Last modified: June 20, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
+    </div> 
+    </div> 
+    </div> <!-- end of class page-wrap-->

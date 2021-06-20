@@ -2,92 +2,230 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/house-thief/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/longest-increasing-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/edit-distance/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/longest-alternating-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/introduction/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/strings-interleaving/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/unbounded-knapsack/coin-change/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/longest-repeating-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/subset-sum/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/unbounded-knapsack/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/unbounded-knapsack/maximum-ribbon-cut/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/minimum-deletions-to-make-a-sequence-sorted/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/subsequence-pattern-matching/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/search/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/longest-common-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/minimum-subset-sum-difference/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-with-fee/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/maximum-sum-increasing-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/number-factors/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/staircase/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/palindromic-subsequence/palindromic-partitioning/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/unbounded-knapsack/minimum-coin-change/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/palindromic-subsequence/longest-palindromic-substring/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/palindromic-subsequence/minimum-deletions-in-a-string-to-make-it-a-palindrome/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-to-reach-the-end/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/minimum-deletions%26insertions-to-transform-a-string-into-another/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/shortest-common-super-sequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/0-1-knapsack/target-sum/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/longest-common-substring/longest-bitonic-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/palindromic-subsequence/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>
 <url>
     <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/unbounded-knapsack/rod-cutting/index.html</loc>
-    <lastmod>2021-06-09</lastmod>
+    <lastmod>2021-06-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
+    <loc>https://rfhklwt.github.io/Dynamic-Programming-Patterns/palindromic-subsequence/count-of-palindromic-substrings/index.html</loc>
+    <lastmod>2021-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
 </url>

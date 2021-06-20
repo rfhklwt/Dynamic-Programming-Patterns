@@ -1,0 +1,144 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/katex/katex.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/libs/highlight/github.min.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/franklin.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/poole_hyde.css"> <link rel=stylesheet  href="/Dynamic-Programming-Patterns/css/custom.css"> <style> html {font-size: 17px;} .franklin-content {position: relative; padding-left: 8%; padding-right: 5%; line-height: 1.35em;} @media (min-width: 940px) { .franklin-content {width: 100%; margin-left: auto; margin-right: auto;} } @media (max-width: 768px) { .franklin-content {padding-left: 6%; padding-right: 6%;} } </style> <title>Longest Bitonic Subsequence</title> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr.min.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunr_index.js"></script> <script src="/Dynamic-Programming-Patterns/libs/lunr/lunrclient.min.js"></script> <div class=sidebar > <div class="container sidebar-sticky"> <div class=sidebar-about > <br> <img src="/Dynamic-Programming-Patterns/assets/infra/DP.svg" style="width: 160px; height: auto; display: inline"> <h1> <div style="line-height:18px; font-size: 20px; opacity: 0.85"><a href="/Dynamic-Programming-Patterns/">Dynamic Programming Patterns</a></div> </h1> <div style="line-height:18px; font-size: 15px; opacity: 0.85">by <a href="https://github.com/rfhklwt">Inia Owlet</a></div> </div> <br> <style> </style> <nav class=sidebar-nav  style="opacity: 0.9"> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/"><b>Overview</b></a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/introduction"><b>Introduction</b></a> <br> <div class=course-section >Pattern 1: 0/1 Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/"><b>1.0</b> - 0/1 Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/equal-subset-sum-partition/"><b>1.1</b> - Equal Subset Sum Partition</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/subset-sum/"><b>1.2</b> - Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/minimum-subset-sum-difference/"><b>1.3</b> - Minimum Subset Sum Difference</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/count-of-subset-sum/"><b>1.4</b> - Count of Subset Sum</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/0-1-knapsack/target-sum/"><b>1.5</b> - Target Sum</a> <div class=course-section >Pattern 2: Unbounded Knapsack</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/"><b>2.0</b> - Unbouned Knapsack</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/rod-cutting/"><b>2.1</b> - Rod Cutting</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/coin-change/"><b>2.2</b> - Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/minimum-coin-change/"><b>2.3</b> - Minimum Coin Change</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/unbounded-knapsack/maximum-ribbon-cut/"><b>2.4</b> - Maximum Ribbon Cut</a> <div class=course-section >Pattern 3: Fibonacci Numbers</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/"><b>3.0</b> - Fibonacci Numbers</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/staircase/"><b>3.1</b> - Staircase</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/number-factors/"><b>3.2</b> - Number factors</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-to-reach-the-end/"><b>3.3</b> - Minimum jumps to reach the end</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/minimum-jumps-with-fee/"><b>3.4</b> - Minimum jumps with fee</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/fibonacci-numbers/house-thief/"><b>3.5</b> - House thief</a> <div class=course-section >Pattern 4: Palindromic Subsequence</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/"><b>4.0</b> - Longest Palindromic Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/longest-palindromic-substring/"><b>4.1</b> - Longest Palindromic Substring</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/count-of-palindromic-substrings/"><b>4.2</b> - Count of Palindromic Substrings</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/minimum-deletions-in-a-string-to-make-it-a-palindrome/"><b>4.3</b> - Minimum Deletions in a String to make it a Palindrome</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/palindromic-subsequence/palindromic-partitioning/"><b>4.4</b> - Palindromic Partitioning</a> <div class=course-section >Pattern 5: Longest Common Substring</div> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/"><b>5.0</b> - Longest Common Substring</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-common-subsequence/"><b>5.1</b> - Longest Common Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/count-of-palindromic-substrings/"><b>5.2</b> - Minimum Deletions & Insertions to Transform a String into another</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/minimum-deletions&insertions-to-transform-a-string-into-another/"><b>4.0</b> - Longest Increasing Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/maximum-sum-increasing-subsequence/"><b>5.3</b> - Maximum Sum Increasing Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/shortest-common-super-sequence/"><b>5.4</b> - Shortest Common Super-sequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/count-of-palindromic-substrings/"><b>5.5</b> - Minimum Deletions to Make a Sequence Sorted</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-repeating-subsequence/"><b>5.6</b> - Longest Repeating Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/subsequence-pattern-matching/"><b>5.7</b> - Subsequence Pattern Matching</a> <a class="sidebar-nav-item active" href="/Dynamic-Programming-Patterns/longest-common-substring/longest-bitonic-subsequence/"><b>5.8</b> - Longest Bitonic Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/longest-alternating-subsequence/"><b>5.9</b> - Longest Alternating Subsequence</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/edit-distance/"><b>4.0</b> - Edit Distance</a> <a class="sidebar-nav-item " href="/Dynamic-Programming-Patterns/longest-common-substring/strings-interleaving/"><b>5.10</b> - Strings Interleaving</a> <br> </nav> </div> </div> <div class="content container"> <div class=franklin-content ><h1 id=longest_bitonic_subsequence ><a href="#longest_bitonic_subsequence" class=header-anchor >Longest Bitonic Subsequence</a></h1> <span style="font-size:24px;font-weight:300;">We'll cover the following</span> <div class=blank ></div> <div class=franklin-toc ><ol><li><a href="#problem_statement">Problem Statement</a><li><a href="#basic_solution">Basic Solution</a><ol><li><a href="#code">Code</a></ol><li><a href="#top-down_dynamic_programming_with_memoization">Top-down Dynamic Programming with Memoization</a><ol><li><a href="#code__2">Code</a></ol><li><a href="#bottom-up_dynamic_programming">Bottom-up Dynamic Programming</a><ol><li><a href="#code__3">Code</a></ol><li><a href="#next">Next</a></ol></div> <div class=blank ></div> <h2 id=problem_statement ><a href="#problem_statement" class=header-anchor >Problem Statement</a></h2> <div class="admonition question"> <div class=admonition-title >🙋 Question</div> <div class=admonition-content >Given a number sequence, find the length of its Longest Bitonic Subsequence &#40;LBS&#41;. A subsequence is considered bitonic if it is monotonically increasing and then monotonically decreasing.</div> </div> <ul> <li><p>Example 1</p> </ul> <pre><code class="Plaintext hljs">Input: {4,2,3,6,10,1,12}
+Output: 5
+Explanation: The LBS is {2,3,6,10,1}.</code></pre> <ul> <li><p>Example 2</p> </ul> <pre><code class="Plaintext hljs">Input: {4,2,5,9,7,6,10,3,1}
+Output: 7
+Explanation: The LBS is {4,5,9,7,6,3,1}.</code></pre> <h2 id=basic_solution ><a href="#basic_solution" class=header-anchor >Basic Solution</a></h2> <p>A basic brute-force solution could be to try finding the Longest Decreasing Subsequences &#40;LDS&#41;, starting from every number in both directions. So for every index <code>i</code> in the given array, we will do two things:</p> <ul> <li><p>Find LDS starting from <code>i</code> to the end of the array.</p> <li><p>Find LDS starting from <code>i</code> to the beginning of the array.</p> </ul> <p>LBS would be the maximum sum of the above two subsequences.</p> <h3 id=code ><a href="#code" class=header-anchor >Code</a></h3> <p>Here is the code:</p> <pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LBS_length</span>(<span class=hljs-params >nums</span>):
+    maxLength = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-built_in >len</span>(nums)):
+        c1 = find_LDS_length(nums, i, -<span class=hljs-number >1</span>)
+        c2 = find_LDS_length_rev(nums, i, -<span class=hljs-number >1</span>)
+        maxLength = <span class=hljs-built_in >max</span>(maxLength, c1 + c2 - <span class=hljs-number >1</span>)
+    <span class=hljs-keyword >return</span> maxLength
+
+<span class=hljs-comment ># find the longest decreasing subsequence from currentIndex till the end of the array</span>
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LDS_length</span>(<span class=hljs-params >nums,  currentIndex, previousIndex</span>):
+    <span class=hljs-keyword >if</span> currentIndex == <span class=hljs-built_in >len</span>(nums):
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># include nums[currentIndex] if it is smaller than the previous number</span>
+    c1 = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >if</span> previousIndex == -<span class=hljs-number >1</span> <span class=hljs-keyword >or</span> nums[currentIndex] &lt; nums[previousIndex]:
+        c1 = <span class=hljs-number >1</span> + find_LDS_length(nums, currentIndex + <span class=hljs-number >1</span>, currentIndex)
+
+    <span class=hljs-comment ># excluding the number at currentIndex</span>
+    c2 = find_LDS_length(nums, currentIndex + <span class=hljs-number >1</span>, previousIndex)
+
+    <span class=hljs-keyword >return</span> <span class=hljs-built_in >max</span>(c1, c2)
+
+<span class=hljs-comment ># find the longest decreasing subsequence from currentIndex till the beginning of the array</span>
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LDS_length_rev</span>(<span class=hljs-params >nums,  currentIndex,  previousIndex</span>):
+    <span class=hljs-keyword >if</span> currentIndex &lt; <span class=hljs-number >0</span>:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-comment ># include nums[currentIndex] if it is smaller than the previous number</span>
+    c1 = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >if</span> previousIndex == -<span class=hljs-number >1</span> <span class=hljs-keyword >or</span> nums[currentIndex] &lt; nums[previousIndex]:
+        c1 = <span class=hljs-number >1</span> + find_LDS_length_rev(nums, currentIndex - <span class=hljs-number >1</span>, currentIndex)
+
+    <span class=hljs-comment ># excluding the number at currentIndex</span>
+    c2 = find_LDS_length_rev(nums, currentIndex - <span class=hljs-number >1</span>, previousIndex)
+
+    <span class=hljs-keyword >return</span> <span class=hljs-built_in >max</span>(c1, c2)
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >1</span>, <span class=hljs-number >12</span>]))
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >5</span>, <span class=hljs-number >9</span>, <span class=hljs-number >7</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >3</span>, <span class=hljs-number >1</span>]))
+
+
+main()</code></pre> <div class="admonition complexity"> <div class=admonition-title >👉 Complexity</div> <div class=admonition-content >The time complexity of the above algorithm is exponential <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord ><span class=mord >2</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span>, where <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> is the lengths of the input array. The space complexity is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>n</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault">n</span><span class=mclose >)</span></span></span></span> which is used to store the recursion stack.</div> </div> <h2 id=top-down_dynamic_programming_with_memoization ><a href="#top-down_dynamic_programming_with_memoization" class=header-anchor >Top-down Dynamic Programming with Memoization</a></h2> <p>To overcome the overlapping subproblems, we can use an array to store the already solved subproblems.</p> <p>We need to memoize the recursive functions that calculate the longest decreasing subsequence. The two changing values for our recursive function are the current and the previous index. Therefore, we can store the results of all subproblems in a two-dimensional array. &#40;Another alternative could be to use a hash-table whose key would be a string &#40;currentIndex &#43; “|” &#43; previousIndex&#41;&#41;.</p> <h3 id=code__2 ><a href="#code__2" class=header-anchor >Code</a></h3> <p>Here is the code:</p> <pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LBS_length</span>(<span class=hljs-params >nums</span>):
+    n = <span class=hljs-built_in >len</span>(nums)
+
+    lds = [[-<span class=hljs-number >1</span> <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+    ldsRev = [[-<span class=hljs-number >1</span> <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n+<span class=hljs-number >1</span>)] <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    maxLength = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n):
+        c1 = find_LDS_length(lds, nums, i, -<span class=hljs-number >1</span>)
+        c2 = find_LDS_length_rev(ldsRev, nums, i, -<span class=hljs-number >1</span>)
+        maxLength = <span class=hljs-built_in >max</span>(maxLength, c1 + c2 - <span class=hljs-number >1</span>)
+
+    <span class=hljs-keyword >return</span> maxLength
+
+<span class=hljs-comment ># find the longest decreasing subsequence from currentIndex till the end of the array</span>
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LDS_length</span>(<span class=hljs-params >dp,  nums,  currentIndex,  previousIndex</span>):
+    <span class=hljs-keyword >if</span> currentIndex == <span class=hljs-built_in >len</span>(nums):
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-keyword >if</span> dp[currentIndex][previousIndex + <span class=hljs-number >1</span>] == -<span class=hljs-number >1</span>:
+        <span class=hljs-comment ># include nums[currentIndex] if it is smaller than the previous number</span>
+        c1 = <span class=hljs-number >0</span>
+        <span class=hljs-keyword >if</span> previousIndex == -<span class=hljs-number >1</span> <span class=hljs-keyword >or</span> nums[currentIndex] &lt; nums[previousIndex]:
+            c1 = <span class=hljs-number >1</span> + find_LDS_length(dp, nums, currentIndex + <span class=hljs-number >1</span>, currentIndex)
+
+        <span class=hljs-comment ># excluding the number at currentIndex</span>
+        c2 = find_LDS_length(dp, nums, currentIndex + <span class=hljs-number >1</span>, previousIndex)
+
+        dp[currentIndex][previousIndex + <span class=hljs-number >1</span>] = <span class=hljs-built_in >max</span>(c1, c2)
+
+    <span class=hljs-keyword >return</span> dp[currentIndex][previousIndex + <span class=hljs-number >1</span>]
+
+<span class=hljs-comment ># find the longest decreasing subsequence from currentIndex till the beginning of the array</span>
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LDS_length_rev</span>(<span class=hljs-params >dp,  nums,  currentIndex,  previousIndex</span>):
+    <span class=hljs-keyword >if</span> currentIndex &lt; <span class=hljs-number >0</span>:
+        <span class=hljs-keyword >return</span> <span class=hljs-number >0</span>
+
+    <span class=hljs-keyword >if</span> dp[currentIndex][previousIndex + <span class=hljs-number >1</span>] == -<span class=hljs-number >1</span>:
+        <span class=hljs-comment ># include nums[currentIndex] if it is smaller than the previous number</span>
+        c1 = <span class=hljs-number >0</span>
+        <span class=hljs-keyword >if</span> previousIndex == -<span class=hljs-number >1</span> <span class=hljs-keyword >or</span> nums[currentIndex] &lt; nums[previousIndex]:
+            c1 = <span class=hljs-number >1</span> + find_LDS_length_rev(dp, nums,
+                                         currentIndex - <span class=hljs-number >1</span>, currentIndex)
+
+        <span class=hljs-comment ># excluding the number at currentIndex</span>
+        c2 = find_LDS_length_rev(dp, nums, currentIndex - <span class=hljs-number >1</span>, previousIndex)
+
+        dp[currentIndex][previousIndex + <span class=hljs-number >1</span>] = <span class=hljs-built_in >max</span>(c1, c2)
+    <span class=hljs-keyword >return</span> dp[currentIndex][previousIndex + <span class=hljs-number >1</span>]
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >1</span>, <span class=hljs-number >12</span>]))
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >5</span>, <span class=hljs-number >9</span>, <span class=hljs-number >7</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >3</span>, <span class=hljs-number >1</span>]))
+
+
+main()</code></pre> <h2 id=bottom-up_dynamic_programming ><a href="#bottom-up_dynamic_programming" class=header-anchor >Bottom-up Dynamic Programming</a></h2> <p>The above algorithm shows us a clear bottom-up approach. We can separately calculate LDS for every index i.e., from the beginning to the end of the array and vice versa. The required length of LBS would be the one that has the maximum sum of LDS for a given index &#40;from both ends&#41;.</p> <h3 id=code__3 ><a href="#code__3" class=header-anchor >Code</a></h3> <p>Here is the code for our bottom-up dynamic programming approach:</p> <pre><code class="python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">find_LBS_length</span>(<span class=hljs-params >nums</span>):
+    n = <span class=hljs-built_in >len</span>(nums)
+    lds = [<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+    ldsReverse = [<span class=hljs-number >0</span> <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n)]
+
+    <span class=hljs-comment ># find LDS for every index up to the beginning of the array</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n):
+        lds[i] = <span class=hljs-number >1</span>  <span class=hljs-comment ># every element is an LDS of length 1</span>
+        <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(i-<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>):
+            <span class=hljs-keyword >if</span> nums[j] &lt; nums[i]:
+                lds[i] = <span class=hljs-built_in >max</span>(lds[i], lds[j] + <span class=hljs-number >1</span>)
+
+    <span class=hljs-comment ># find LDS for every index up to the end of the array</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n-<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>, -<span class=hljs-number >1</span>):
+        ldsReverse[i] = <span class=hljs-number >1</span>  <span class=hljs-comment ># every element is an LDS of length 1</span>
+        <span class=hljs-keyword >for</span> j <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(i+<span class=hljs-number >1</span>, n):
+            <span class=hljs-keyword >if</span> nums[j] &lt; nums[i]:
+                ldsReverse[i] = <span class=hljs-built_in >max</span>(ldsReverse[i], ldsReverse[j]+<span class=hljs-number >1</span>)
+
+    maxLength = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(n):
+        maxLength = <span class=hljs-built_in >max</span>(maxLength, lds[i] + ldsReverse[i]-<span class=hljs-number >1</span>)
+
+    <span class=hljs-keyword >return</span> maxLength
+
+
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">main</span>():
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >3</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >1</span>, <span class=hljs-number >12</span>]))
+    <span class=hljs-built_in >print</span>(find_LBS_length([<span class=hljs-number >4</span>, <span class=hljs-number >2</span>, <span class=hljs-number >5</span>, <span class=hljs-number >9</span>, <span class=hljs-number >7</span>, <span class=hljs-number >6</span>, <span class=hljs-number >10</span>, <span class=hljs-number >3</span>, <span class=hljs-number >1</span>]))
+
+
+main()</code></pre> <div class="admonition complexity"> <div class=admonition-title >👉 Complexity</div> <div class=admonition-content >The time complexity of the above algorithm is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class=mord ><span class="mord mathdefault">n</span><span class=msupsub ><span class=vlist-t ><span class=vlist-r ><span class=vlist  style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class=pstrut  style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class=mclose >)</span></span></span></span> and the space complexity is <span class=katex ><span class=katex-mathml ><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy=false >(</mo><mi>n</mi><mo stretchy=false >)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class=katex-html  aria-hidden=true ><span class=base ><span class=strut  style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class=mopen >(</span><span class="mord mathdefault">n</span><span class=mclose >)</span></span></span></span>.</div> </div> <h2 id=next ><a href="#next" class=header-anchor >Next</a></h2> <div class=flist ><ul> <li><p><a href="/Dynamic-Programming-Patterns/longest-common-substring/longest-alternating-subsequence" id=goto ><span id=check >&check;</span><span id=arrow ><b>&rarr;</b></span></a> Longest Alternating Subsequence</p> </ul></div> <div class=page-foot > <div class=copyright > &copy; Qling Alter. Last modified: June 20, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div> </div> </div> </div> <!-- end of class page-wrap-->
